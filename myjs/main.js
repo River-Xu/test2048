@@ -9,6 +9,51 @@ $('.restart-button').on('click',function(){
     window.location.reload();
 });
 
+document.addEventListener('touchstart',function(event){
+    startx = event.touches[0].pageX;
+    starty = event.touches[0].pageY;
+});
+
+document.addEventListener('touchend',function(event){
+    endx = event.changedTouches[0].pageX;
+    endy = event.changedTouches[0].pageY;
+
+    var deltax = endx - startx;
+    var deltay = endy - starty;
+
+    if( Math.abs( deltax ) < 0.3*documentWidth && Math.abs( deltay ) < 0.3*documentWidth )
+        return;
+
+    if( Math.abs( deltax ) >= Math.abs( deltay ) ){
+
+        if( deltax > 0 ){
+            //move right
+            goRight();
+            getScore();
+            isGameOver();    
+        }
+        else{
+            //move left
+            goLeft();
+            getScore();
+            isGameOver();    
+        }
+    }
+    else{
+        if( deltay > 0 ){
+            //move down
+            goDown();
+            getScore();
+            isGameOver();    
+        }
+        else{
+            //move up
+            goUp();
+            getScore();
+            isGameOver();    
+        }
+    }
+});
 
 //生成初始cell
 function generateCell(){
